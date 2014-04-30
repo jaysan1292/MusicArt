@@ -7,7 +7,7 @@ include theos/makefiles/common.mk
 
 TWEAK_NAME = MusicArt
 MusicArt_CFLAGS = -fobjc-arc
-MusicArt_FILES = MusicArt.x
+MusicArt_FILES = MusicArt.xm
 MusicArt_FRAMEWORKS = Foundation QuartzCore UIKit MediaPlayer
 
 include $(THEOS_MAKE_PATH)/tweak.mk
