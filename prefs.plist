@@ -1,0 +1,11 @@
+{
+	entry = {
+		cell = PSSwitchCell;
+		default = 1;
+		defaults = "com.jaysan1292.musicart";
+		key = enabled;
+		label = MusicArt;
+		PostNotification = "com.jaysan1292.musicart.toggled";
+		icon = "/System/Library/PreferenceBundles/MusicSettings.bundle/icon.png";
+	};
+}
