@@ -45,7 +45,12 @@
 @property(readonly, nonatomic) unsigned long long year;
 @end
 
+@interface SBIcon : NSObject
+- (id)nodeIdentifier;
+@end
+
 @interface SBIconView : UIView
+@property (retain, nonatomic) SBIcon* icon;
 @end
 
 @interface SBApplication : NSObject

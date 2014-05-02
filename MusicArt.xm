@@ -16,8 +16,12 @@
 #define kFadeSpeed 1.0
 #define kAlbumViewTag 1598
 
+NSString* _musicAppIdentifier = @"com.apple.Music";
+
 BOOL Enabled  = YES;
 BOOL Cooldown = NO;
+
+SBIconView* _ourInstance = nil;
 
 @interface MAMusicArtController : NSObject
 + (instancetype)sharedInstance;
@@ -44,7 +48,7 @@ BOOL Cooldown = NO;
 	return [[self _getMusicIconView] viewWithTag:kAlbumViewTag] != nil;
 }
 - (SBIconView*)_getMusicIconView {
-	return [[%c(SBIconViewMap) homescreenMap] mappedIconViewForIcon:[[(SBIconController*)[%c(SBIconController) sharedInstance] model] expectedIconForDisplayIdentifier:@"com.apple.Music"]];
+	return _ourInstance;
 }
 - (UIImageView*)_getAlbumArtIcon {
 	return (UIImageView*)[[self _getMusicIconView] viewWithTag:kAlbumViewTag];
@@ -152,6 +156,21 @@ BOOL Cooldown = NO;
 @end
 
 %group main
+
+%hook SBIconView
+- (void)setIcon:(SBIcon*)icon {
+	%orig;
+	if ([_musicAppIdentifier isEqualToString:[icon nodeIdentifier]] && (&_ourInstance != &self)) {
+		log_selector_with_message(@"%@", icon);
+		// Our icon instance has changed, so remove the album art from the old view and add it to our current one
+		// Calling 'viewWithTag' on the sharedApplication's keyWindow will return the correct view, wherever it is
+		UIView* albumArtView = [[[UIApplication sharedApplication] keyWindow] viewWithTag:kAlbumViewTag];
+		[albumArtView removeFromSuperview];
+		[self addSubview:albumArtView];
+		_ourInstance = self;
+	}
+}
+%end
 
 // Hide or show the album art when entering and leaving the music app, respectively
 %hook SBApplication

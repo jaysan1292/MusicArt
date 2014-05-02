@@ -1,7 +1,7 @@
 Package: com.jaysan1292.musicart
 Name: MusicArt
 Depends: mobilesubstrate, firmware (>= 7.0)
-Version: 0.1
+Version: 0.2
 Architecture: iphoneos-arm
 Description: Change your music app icon to the Now Playing album artwork
 Author: Jason Recillo <jaysan1292+cydia@gmail.com>
